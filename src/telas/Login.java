@@ -153,15 +153,13 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnCadastroActionPerformed
 
     private void BtnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnLoginActionPerformed
-        
-    
         String nome = TxtNome.getText().trim();
         String login = TxtLogin.getText().trim();
-        String senha = new String(TxtSenha.getText()).trim(); // se for JPasswordField
+        String senha = TxtSenha.getText().trim();
 
         if (nome.isEmpty() || login.isEmpty() || senha.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Preencha todos os campos!");
-           return;
+            return;
         }
 
         Connection conn = null;
@@ -169,7 +167,7 @@ public class Login extends javax.swing.JFrame {
         ResultSet rs = null;
 
         try {
-         conn = conexao.conexao.conectar(); // sua classe de conexão
+            conn = conexao.conexao.conectar();
 
             if (conn == null) {
                 JOptionPane.showMessageDialog(this, "Erro ao conectar com o banco de dados!");
@@ -187,12 +185,12 @@ public class Login extends javax.swing.JFrame {
             if (rs.next()) {
                 // Login bem-sucedido
                 JOptionPane.showMessageDialog(this, "Login realizado com sucesso!");
-            
+
                 // Abre a tela Principal
                 Principal tela = new Principal();
                 tela.setVisible(true);
                 this.dispose(); // fecha a tela de login
-            
+
             } else {
                 JOptionPane.showMessageDialog(this, "Nome, Login ou Senha incorretos!");
             }
@@ -208,8 +206,7 @@ public class Login extends javax.swing.JFrame {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-    }
-}
+        }
     }//GEN-LAST:event_BtnLoginActionPerformed
 
     /**
