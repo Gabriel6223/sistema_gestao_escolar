@@ -44,17 +44,17 @@ public class Alunos extends javax.swing.JFrame {
 
         TblAlunos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Nome", "Matricula", "Turma_id"
+                "Aluno_id", "Nome", "Matricula", "Turma_id"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -120,7 +120,25 @@ public class Alunos extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnVoltarActionPerformed
 
     private void BtnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnPesquisarActionPerformed
-        
+        try{
+            Connection conn = conexao.conexao.conectar();
+            DefaultTableModel modelo = (DefaultTableModel) TblAlunos.getModel();
+            
+            modelo.setRowCount(0);
+            String sql = "select * from alunos";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            
+            while(rs.next()){
+               modelo.addRow(new Object[]{rs.getInt("id"),rs.getString("nome"),rs.getString("matricula"),rs.getInt("turma_id")});
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+            
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_BtnPesquisarActionPerformed
 
     /**
