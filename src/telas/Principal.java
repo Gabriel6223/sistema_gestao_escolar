@@ -39,6 +39,11 @@ public class Principal extends javax.swing.JFrame {
         jLabel1.setText("Sistema de Gestão Escolar - PRINCIPAL");
 
         BtnAluno.setText("Alunos");
+        BtnAluno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnAlunoActionPerformed(evt);
+            }
+        });
 
         BtnTurma.setText("Turmas");
         BtnTurma.addActionListener(new java.awt.event.ActionListener() {
@@ -48,10 +53,25 @@ public class Principal extends javax.swing.JFrame {
         });
 
         BtnUsuario.setText("Usuarios");
+        BtnUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnUsuarioActionPerformed(evt);
+            }
+        });
 
         BtnNota.setText("Notas");
+        BtnNota.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnNotaActionPerformed(evt);
+            }
+        });
 
         BtnDeslogar.setText("Deslogar");
+        BtnDeslogar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnDeslogarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -98,8 +118,39 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtnTurmaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnTurmaActionPerformed
-        // TODO add your handling code here:
+        Turmas tela = new Turmas();
+        tela.setVisible(true);
+        
+        this.dispose();
     }//GEN-LAST:event_BtnTurmaActionPerformed
+
+    private void BtnAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAlunoActionPerformed
+        Alunos tela = new Alunos();
+        tela.setVisible(true);
+        
+        this.dispose();
+    }//GEN-LAST:event_BtnAlunoActionPerformed
+
+    private void BtnUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnUsuarioActionPerformed
+        Usuarios tela = new Usuarios();
+        tela.setVisible(true);
+        
+        this.dispose();
+    }//GEN-LAST:event_BtnUsuarioActionPerformed
+
+    private void BtnNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnNotaActionPerformed
+        Notas tela = new Notas();
+        tela.setVisible(true);
+        
+        this.dispose();
+    }//GEN-LAST:event_BtnNotaActionPerformed
+
+    private void BtnDeslogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnDeslogarActionPerformed
+        Login tela = new Login();
+        tela.setVisible(true);
+        
+        this.dispose();
+    }//GEN-LAST:event_BtnDeslogarActionPerformed
 
     /**
      * @param args the command line arguments

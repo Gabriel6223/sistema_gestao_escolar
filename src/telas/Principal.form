@@ -85,6 +85,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Alunos"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnAlunoActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JToggleButton" name="BtnTurma">
       <Properties>
@@ -98,16 +101,25 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Usuarios"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnUsuarioActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JToggleButton" name="BtnNota">
       <Properties>
         <Property name="text" type="java.lang.String" value="Notas"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnNotaActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="BtnDeslogar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Deslogar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnDeslogarActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
