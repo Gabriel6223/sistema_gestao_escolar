@@ -4,10 +4,13 @@
  */
 package telas;
 
-/**
- *
- * @author erick62333106
- */
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+import java.sql.SQLException;
+
+
 public class Login extends javax.swing.JFrame {
 
     /**
@@ -30,7 +33,7 @@ public class Login extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         TxtNome = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        TxtEmail = new javax.swing.JTextField();
+        TxtLogin = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         TxtSenha = new javax.swing.JTextField();
         BtnLogin = new javax.swing.JToggleButton();
@@ -49,15 +52,25 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setText("E-Mail");
+        jLabel3.setText("Login");
 
         jLabel4.setText("Senha");
 
         BtnLogin.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         BtnLogin.setText("Login");
+        BtnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnLoginActionPerformed(evt);
+            }
+        });
 
         BtnCadastro.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         BtnCadastro.setText("Cadastro");
+        BtnCadastro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnCadastroActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -72,7 +85,7 @@ public class Login extends javax.swing.JFrame {
                             .addComponent(jLabel3)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(TxtSenha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                                .addComponent(TxtEmail, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(TxtLogin, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(TxtNome, javax.swing.GroupLayout.Alignment.LEADING))
                             .addComponent(jLabel2)
                             .addComponent(jLabel4))
@@ -98,7 +111,7 @@ public class Login extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TxtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(TxtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -115,6 +128,89 @@ public class Login extends javax.swing.JFrame {
     private void TxtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtNomeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TxtNomeActionPerformed
+
+    private void BtnCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCadastroActionPerformed
+        try{
+            Connection conn = conexao.conexao.conectar();
+            
+            String sql = "INSERT INTO usuarios(login,senha,nome) VALUES(?,?,?)";
+            
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            
+            stmt.setString(1,TxtNome.getText());
+            stmt.setString(2,TxtLogin.getText());
+            stmt.setString(3,TxtSenha.getText());
+            
+            stmt.execute();
+            
+            JOptionPane.showMessageDialog(null, "Salvo!");
+            
+            stmt.close();
+            conn.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_BtnCadastroActionPerformed
+
+    private void BtnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnLoginActionPerformed
+        
+    
+        String nome = TxtNome.getText().trim();
+        String login = TxtLogin.getText().trim();
+        String senha = new String(TxtSenha.getText()).trim(); // se for JPasswordField
+
+        if (nome.isEmpty() || login.isEmpty() || senha.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Preencha todos os campos!");
+           return;
+        }
+
+        Connection conn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+
+        try {
+         conn = conexao.conexao.conectar(); // sua classe de conexão
+
+            if (conn == null) {
+                JOptionPane.showMessageDialog(this, "Erro ao conectar com o banco de dados!");
+                return;
+            }
+
+            String sql = "SELECT * FROM usuarios WHERE nome = ? AND login = ? AND senha = ?";
+            pst = conn.prepareStatement(sql);
+            pst.setString(1, nome);
+            pst.setString(2, login);
+            pst.setString(3, senha);
+
+            rs = pst.executeQuery();
+
+            if (rs.next()) {
+                // Login bem-sucedido
+                JOptionPane.showMessageDialog(this, "Login realizado com sucesso!");
+            
+                // Abre a tela Principal
+                Principal tela = new Principal();
+                tela.setVisible(true);
+                this.dispose(); // fecha a tela de login
+            
+            } else {
+                JOptionPane.showMessageDialog(this, "Nome, Login ou Senha incorretos!");
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Erro no banco de dados: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (pst != null) pst.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+    }
+}
+    }//GEN-LAST:event_BtnLoginActionPerformed
 
     /**
      * @param args the command line arguments
@@ -154,7 +250,7 @@ public class Login extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton BtnCadastro;
     private javax.swing.JToggleButton BtnLogin;
-    private javax.swing.JTextField TxtEmail;
+    private javax.swing.JTextField TxtLogin;
     private javax.swing.JTextField TxtNome;
     private javax.swing.JTextField TxtSenha;
     private javax.swing.JLabel jLabel1;
