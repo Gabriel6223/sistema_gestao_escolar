@@ -133,7 +133,7 @@ public class Login extends javax.swing.JFrame {
         try{
             Connection conn = conexao.conexao.conectar();
             
-            String sql = "INSERT INTO usuarios(login,senha,nome) VALUES(?,?,?)";
+            String sql = "INSERT INTO usuarios(nome,login,senha) VALUES(?,?,?)";
             
             PreparedStatement stmt = conn.prepareStatement(sql);
             
